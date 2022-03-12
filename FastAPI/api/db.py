@@ -25,5 +25,15 @@ Article = Table(
     Column("description",  String(500)), 
 )
 
+
+User = Table(
+    "user",
+    metadata,
+    Column("id", Integer, primary_key=True), 
+    Column("username", String(100)), 
+    Column("password",  String(200)), 
+)
+
+
 engine = create_engine(DATABASE_URL)
 database = Database(DATABASE_URL)
