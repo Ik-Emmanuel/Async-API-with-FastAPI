@@ -19,7 +19,7 @@ async def insert_article(article:ArticleSchema):
     return {**article.dict(), "id":last_record_id}
 
 
-#protected route
+#protected route by adding current_user:UserSchema = Depends(get_current_user) as query parms
 @router.get('/', response_model=List[MyArticleSchema])
 async def get_articles(current_user:UserSchema = Depends(get_current_user)):
     query = Article.select()
@@ -27,7 +27,7 @@ async def get_articles(current_user:UserSchema = Depends(get_current_user)):
 
 
 @router.get('/{id}', response_model=MyArticleSchema)
-async def get_details(id:int):
+async def get_details(id:int, current_user:UserSchema = Depends(get_current_user)):
     query = Article.select().where(id == Article.c.id)
     myarticle = await database.fetch_one(query=query)
 
