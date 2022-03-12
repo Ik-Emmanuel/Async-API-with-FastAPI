@@ -1,4 +1,6 @@
+import imp
 from pydantic import BaseModel
+from typing import Optional
 
 class ArticleSchema(BaseModel):
     # id:int  -- no need for this since the db models has it as PK and will autoincrement
@@ -22,3 +24,6 @@ class MyUserSchema(BaseModel):
 class LoginSchema(BaseModel):
     username:str
     password:str
+
+class TokenData(BaseModel):
+    username: Optional[str] = None

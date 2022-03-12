@@ -1,10 +1,13 @@
 import re
-from fastapi import APIRouter
-from fastapi import Depends, FastAPI, status, HTTPException
-from .db import User, metadata, database, engine, Article
-from .schemas import MyUserSchema, UserSchema, LoginSchema
+from fastapi import APIRouter, Depends
+from fastapi import status, HTTPException
+from .db import User, database
+from .schemas import MyUserSchema, LoginSchema
 from typing import List
 from passlib.hash import pbkdf2_sha256
+from .Token import create_access_token
+from fastapi.security import OAuth2PasswordRequestForm
+
 
 router = APIRouter(
     tags=["Auth"],
@@ -12,8 +15,8 @@ router = APIRouter(
 )
 
 
-@router.post('/', response_model=MyUserSchema )
-async def login(request:LoginSchema):
+@router.post('/',)
+async def login(request: OAuth2PasswordRequestForm = Depends()):
     query = User.select().where(User.c.username == request.username)
     user = await database.fetch_one(query)
     
@@ -22,5 +25,8 @@ async def login(request:LoginSchema):
     if not pbkdf2_sha256.verify(request.password, user.password):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid credentials")
     else:
-        return user
+        access_token = create_access_token(
+            data={"sub": user.username},
+        )
+        return {"access_token": access_token, "token_type": "bearer"}
 

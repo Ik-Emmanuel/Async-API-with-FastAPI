@@ -1,8 +1,9 @@
 from fastapi import APIRouter
 from fastapi import Depends, FastAPI, status, HTTPException
 from .db import metadata, database, engine, Article
-from .schemas import ArticleSchema, MyArticleSchema
+from .schemas import ArticleSchema, MyArticleSchema, UserSchema
 from typing import List
+from .Token import get_current_user
 
 router = APIRouter(
     tags=["Articles"],
@@ -18,8 +19,9 @@ async def insert_article(article:ArticleSchema):
     return {**article.dict(), "id":last_record_id}
 
 
+#protected route
 @router.get('/', response_model=List[MyArticleSchema])
-async def get_articles():
+async def get_articles(current_user:UserSchema = Depends(get_current_user)):
     query = Article.select()
     return await database.fetch_all(query=query)
 
