@@ -1,10 +1,9 @@
-from turtle import title
 from typing import Optional, List
 from fastapi import Depends, FastAPI, status, HTTPException
 from pydantic import BaseModel
 from .database import engine, SessionLocal
 from . import models
-from .schemas import *
+from .schemas import * 
 from sqlalchemy.orm import Session
 ##########################################################################################
 
@@ -12,7 +11,7 @@ models.Base.metadata.create_all(bind=engine)
    
 app = FastAPI()
 
-
+#
 # Dependency
 def get_db():
     db = SessionLocal()
