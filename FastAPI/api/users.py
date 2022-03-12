@@ -6,7 +6,7 @@ from typing import List
 from passlib.hash import pbkdf2_sha256
 
 router = APIRouter(
-    tags=["users"],
+    tags=["Users"],
     prefix="/users"
 )
 

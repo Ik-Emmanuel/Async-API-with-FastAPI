@@ -17,3 +17,8 @@ class UserSchema(BaseModel):
 class MyUserSchema(BaseModel):
     id:int 
     username:str    
+
+
+class LoginSchema(BaseModel):
+    username:str
+    password:str

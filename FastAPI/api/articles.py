@@ -5,7 +5,7 @@ from .schemas import ArticleSchema, MyArticleSchema
 from typing import List
 
 router = APIRouter(
-    tags=["articles"],
+    tags=["Articles"],
     prefix="/articles"
 )
 
