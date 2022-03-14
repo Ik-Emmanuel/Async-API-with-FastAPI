@@ -10,7 +10,9 @@ router = APIRouter(
     prefix="/articles"
 )
 
+####################### CRUD Operation 
 
+#1 Create a new entry
 @router.post('/', status_code=status.HTTP_201_CREATED)
 async def insert_article(article:ArticleSchema):
     query = Article.insert().values(title = article.title, description = article.description)
@@ -19,6 +21,7 @@ async def insert_article(article:ArticleSchema):
     return {**article.dict(), "id":last_record_id}
 
 
+#2 Read all entries 
 #protected route by adding current_user:UserSchema = Depends(get_current_user) as query parms
 @router.get('/', response_model=List[MyArticleSchema])
 async def get_articles(current_user:UserSchema = Depends(get_current_user)):
@@ -26,6 +29,7 @@ async def get_articles(current_user:UserSchema = Depends(get_current_user)):
     return await database.fetch_all(query=query)
 
 
+#3 Read one single entry
 @router.get('/{id}', response_model=MyArticleSchema)
 async def get_details(id:int, current_user:UserSchema = Depends(get_current_user)):
     query = Article.select().where(id == Article.c.id)
@@ -37,7 +41,7 @@ async def get_details(id:int, current_user:UserSchema = Depends(get_current_user
         return {**myarticle}
 
 
-
+#4 Update an entry
 @router.put('/{id}', response_model=MyArticleSchema)
 async def update_article(id:int, article:ArticleSchema):
     query = Article.update().where(Article.c.id == id).values(title=article.title, description=article.description)
@@ -45,6 +49,7 @@ async def update_article(id:int, article:ArticleSchema):
     return {**article.dict(), "id":id}
 
 
+#5  Delete an  entry
 @router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
 async def delete_article(id:int):
     query = Article.delete().where(Article.c.id == id)

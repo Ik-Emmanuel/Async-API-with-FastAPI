@@ -2,7 +2,6 @@ import re
 from fastapi import APIRouter, Depends
 from fastapi import status, HTTPException
 from .db import User, database
-from .schemas import MyUserSchema, LoginSchema
 from typing import List
 from passlib.hash import pbkdf2_sha256
 from .Token import create_access_token

@@ -1,3 +1,4 @@
+import json
 from sqlalchemy import (
     Column,
     Integer,
@@ -6,8 +7,9 @@ from sqlalchemy import (
     Table, 
     create_engine
 )
-import json
+
 from databases import Database
+
 
 with open ('vars.json', 'r') as variables:
     env_vars = json.loads(variables.read())  
@@ -15,8 +17,10 @@ with open ('vars.json', 'r') as variables:
 DATABASE_URL = f"{env_vars['DB']}://{env_vars['DB_USER']}:{env_vars['DB_PASSWORD']}@localhost/asyncfastapi"
 
 
-
+###STEP 1
 metadata = MetaData()
+
+#STEP 2  DB Tables to be created
 Article = Table(
     "article",
     metadata,
@@ -24,7 +28,6 @@ Article = Table(
     Column("title", String(100)), 
     Column("description",  String(500)), 
 )
-
 
 User = Table(
     "user",
@@ -34,6 +37,27 @@ User = Table(
     Column("password",  String(200)), 
 )
 
-
+#STEP 3
 engine = create_engine(DATABASE_URL)
 database = Database(DATABASE_URL)
+
+
+
+#STEP 4 in main.py
+
+# Create your tables  
+# metadata.create_all(engine)
+
+# app = FastAPI()
+
+
+#Set up your db connection 
+
+# @app.on_event("startup")
+# async def startup():
+#     await database.connect()
+
+
+# @app.on_event("shutdown")
+# async def startup():
+#     await database.disconnect()
