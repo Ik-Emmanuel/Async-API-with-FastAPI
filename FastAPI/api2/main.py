@@ -37,6 +37,8 @@ async def get_detail(id:int):
 @app.post('/articles', response_model=Article_Pydantic)
 async def insert_article(article:ArticleIn_Pydantic):
     article_obj = await  Article.create(**article.dict(exclude_unset=True))
+    # exclude_unset=True allows values not passed by user to be set to null'
+    #  else it throws error for missing values
     return await Article_Pydantic.from_tortoise_orm(article_obj)
 
 #4 Update data
@@ -70,7 +72,7 @@ register_tortoise(
 
     #creates the db and the create table upon first runs 
     generate_schemas = True, 
-    
+
     #for handling exceptions
     add_exception_handlers = True
 )
