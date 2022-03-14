@@ -16,6 +16,6 @@ class Article(models.Model):
         pass
 
 
-
+# Tortoise helps with creation of pydantic models creator from database models 
 Article_Pydantic = pydantic_model_creator(Article, name="Article")
 ArticleIn_Pydantic = pydantic_model_creator(Article, name="ArticleIn", exclude_readonly=True)

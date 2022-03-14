@@ -59,9 +59,18 @@ async def delete_article(id:int):
 
 ###################################################################################
 register_tortoise(
+    #The app instance
     app, 
+
+    #the db url
     db_url = DATABASE_URL,
+
+    #list of every where you have db models 
     modules ={"models":["api2.models"]},
+
+    #creates the db and the create table upon first runs 
     generate_schemas = True, 
+    
+    #for handling exceptions
     add_exception_handlers = True
 )

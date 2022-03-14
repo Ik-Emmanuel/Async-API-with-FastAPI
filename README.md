@@ -10,5 +10,5 @@ Building asynchronous APIs with Python FastAPI
 
 # Async API with standard project structure , databases library and sqlAlchemy
  Code files in `FastAPI/api` folder
-# Async API with Tortoise ORM 
+# FastAPI with Tortoise Async ORM 
  Code files in `FastAPI/api2` folder
