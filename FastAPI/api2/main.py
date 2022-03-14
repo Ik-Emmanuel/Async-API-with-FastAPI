@@ -53,9 +53,9 @@ async def delete_article(id:int):
 
     if not deleted_article:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, 
-        detail=f"id not found")
+        detail=f"Article {id} not found")
     return Status(message= f"Deleted article {id}")
-    
+
 
 ###################################################################################
 register_tortoise(
